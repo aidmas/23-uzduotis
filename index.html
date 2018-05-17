@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            padding: 0 10px;
+        }
+
+
+        body button.btn.btn-primary.btn-lg {
+            margin: 10px;
+        }
+
+        button.buttonAction {
+            padding: 0;
+            margin: -4px 0;
+            border: 2px solid black;
+            border-radius: 7px;
+            background-color: #ffffff;
+        }
+
+        button.buttonAction.delete {
+            color: #c23616;
+            border: 2px solid #c23616;
+        }
+
+        button.buttonAction.delete:hover {
+            color: #ffffff;
+            background-color: #c23616;
+        }
+
+        button.buttonAction.edit {
+            color: #0097e6;
+            border: 2px solid #0097e6;
+        }
+
+        button.buttonAction.edit:hover {
+            color: #ffffff;
+            background-color: #0097e6;
+        }
+
+
+        button.buttonAction.reply {
+            color: #e1b12c;
+            border: 2px solid #e1b12c;
+        }
+
+        button.buttonAction.reply:hover {
+            color: #ffffff;
+            background-color: #e1b12c;
+        }
+
+        i.material-icons.material-icons {
+            font-size: 20px;
+            line-height: 20px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="error"></div>
+        <!-- Mygtukas -->
+        <button id="buttonNew" type="button" class="btn btn-primary btn-lg" style="display:inline-block" data-toggle="modal" data-target="#m1">
+            Naujas
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="m1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Naujų duomenų įvedimas</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="data">Data</label>
+                            <input type="date" class="form-control" id="data" placeholder="Data">
+                        </div>
+                        <div class="form-group">
+                            <label for="numeris">Numeris</label>
+                            <input type="text" class="form-control" id="numeris" placeholder="Numeris">
+                        </div>
+                        <div class="form-group">
+                            <label for="atstumas">Atstumas(m)</label>
+                            <input type="number" class="form-control" id="atstumas" placeholder="Atstumas metrais">
+                        </div>
+                        <div class="form-group">
+                            <label for="laikas">Laikas(s)</label>
+                            <input type="number" class="form-control" id="laikas" placeholder="Laikas sekundėmis">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="material-icons">clear</i> Atšaukti</button>
+                        <button id="save" type="button" class="btn btn-primary" style="display:inline-block">
+                            <i class="material-icons">save</i> Saugoti</button>
+                        <button id="done" type="button" class="btn btn-primary" style="display:none">
+                            <i class="material-icons">done</i> Pakeisti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal2 -->
+        <div class="modal fade" id="m2">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Ar tikrai ištrinti duomenis?</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            <i class="material-icons">clear</i> Atšaukti</button>
+                        <button id="confirmDelete" type="button" class="btn btn-primary">
+                            <i class="material-icons">done</i>Patvirtinti</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Table -->
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">Numeris</th>
+                    <th scope="col">Atstumas(m)</th>
+                    <th scope="col">Laikas(s)</th>
+                    <th scope="col">Greitis(km/h)</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        var deleteId, editId;
+        $(function () {
+
+            gautiLentele();
+
+        });
+
+        $(document).ready(function () {
+            $('#save').click(function () {
+                $('#m1').modal('hide');
+                naujas();
+                cleanUpInputFields();
+            });
+            $('.btn-danger').click(function () {
+                cleanUpInputFields();
+                $('#done').css("display", "none");
+                $('#save').css("display", "inline-block");
+                $("#m1").find("h4").text("Naujų duomenų įvedimas");
+            });
+            $('#confirmDelete').click(function () {
+                trinti();
+                gautiLentele();
+                $('#m2').modal('hide');
+            });
+            $('#done').click(function () {
+                redaguoti();
+                cleanUpInputFields();
+                $('#m1').modal('hide');
+                $('#done').css("display", "none");
+                $('#save').css("display", "inline-block");
+                $("#m1").find("h4").text("Naujų duomenų įvedimas");
+            });
+        });
+
+        function gautiLentele() {
+            $.get("lentele.php", function (resp) {
+                if (resp.success) {
+                    rodytilentele(resp.data);
+                } else {
+                    $('#error').text('kazkokia klaida');
+                }
+            }).fail(function () {
+                $('#error').text('kazkokia rimta klaida');
+            });
+        }
+        function rodytilentele(data) {
+            let i = 1;
+            $('tbody').empty();
+            data.forEach(x => {
+                $('tbody').append(
+                    $('<tr></tr>').append(
+                        $('<td></td>').text(i++),
+                        $('<td></td>').text(x.date),
+                        $('<td></td>').text(x.number),
+                        $('<td></td>').text(x.distance),
+                        $('<td></td>').text(x.time),
+                        $('<td></td>').text(x.distance / x.time * 3.6),
+                        $('<td></td>').append(button(x.id))
+                    )
+                );
+            });
+        }
+        function button(id) {
+            let buttonEdit = '<button class="buttonAction edit" onclick="EditRow(' + id + ')" data-toggle="modal" data-target="#m1"><i class="material-icons">&#xE254;</i></button>';
+            let buttonDelete = '<button class="buttonAction delete" onclick="deleteRow(' + id + ')" data-toggle="modal" data-target="#m2"><i class="material-icons">clear</i></button>';
+            return buttonEdit + buttonDelete;
+        }
+
+        function redaguoti() {
+            $.get('redaguoti.php', { id: editId, data: $('#data').val(), numeris: $('#numeris').val(), kelias: $('#atstumas').val(), laikas: $('#laikas').val() }, function (resp) {
+                if (!resp.success) {         // neaiškus kodėl
+                    gautiLentele();
+                } else {
+                    $('#error').text('kazkokia klaida sukuriant nauja');
+                }
+            }).fail(function () {
+                $('#error').text('kazkokia rimta klaida sukuriant nauja');
+            });
+        }
+
+        function naujas() {
+            $.get('naujas.php', { data: $('#data').val(), numeris: $('#numeris').val(), kelias: $('#atstumas').val(), laikas: $('#laikas').val() }, function (resp) {
+                if (!resp.success) {    // neaiškus kodėl
+                    gautiLentele();
+                } else {
+                    $('#error').text('kazkokia klaida sukuriant nauja');
+                }
+            }).fail(function () {
+                $('#error').text('kazkokia rimta klaida sukuriant nauja');
+            });
+        }
+
+        function EditRow(elemId) {
+            editId = elemId;
+            gautiLenteleImputui();
+            $("#m1").find("h4").text("Redaguoti duomenis");
+            $('#save').css("display", "none");
+            $('#done').css("display", "inline-block");
+        }
+        function deleteRow(elemId) {
+            deleteId = elemId;
+        }
+
+        function trinti() {
+            $.get('trinti.php', { id: deleteId }, function (resp) {
+                if (resp.success) {
+                    gautiLentele();
+
+                } else {
+                    $('#error').text('kazkokia klaida trinant');
+                }
+            }).fail(function () {
+                $('#error').text('kazkokia rimta klaida trinant');
+            });
+        }
+
+        function closeConfirm() {
+            document.getElementById('confirm').style.visibility = 'hidden';
+            document.getElementById('container').style.filter = 'blur(0)';
+        }
+
+        function cleanUpInputFields() {
+            $('#data').val(null);
+            $('#numeris').val(null);
+            $('#atstumas').val(null);
+            $('#laikas').val(null);
+        }
+        function gautiLenteleImputui() {
+            $.get("lentele.php", function (resp) {
+                if (resp.success) {
+                    setInputFields(resp.data);
+                } else {
+                    $('#error').text('kazkokia klaida');
+                }
+            }).fail(function () {
+                $('#error').text('kazkokia rimta klaida');
+            });
+        }
+        function setInputFields(data) {
+            data.forEach(x => {
+                if (x.id == editId) {
+                    $('#data').val(x.date);
+                    $('#numeris').val(x.number);
+                    $('#atstumas').val(x.distance);
+                    $('#laikas').val(x.time);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
