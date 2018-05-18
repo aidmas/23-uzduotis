@@ -234,7 +234,7 @@
                 if (!resp.success) {         // neaiškus kodėl
                     gautiLentele();
                 } else {
-                    $('#error').text('kazkokia klaida sukuriant nauja');
+                    gautiLentele();
                 }
             }).fail(function () {
                 $('#error').text('kazkokia rimta klaida sukuriant nauja');
@@ -246,7 +246,7 @@
                 if (!resp.success) {    // neaiškus kodėl
                     gautiLentele();
                 } else {
-                    $('#error').text('kazkokia klaida sukuriant nauja');
+                    gautiLentele();
                 }
             }).fail(function () {
                 $('#error').text('kazkokia rimta klaida sukuriant nauja');

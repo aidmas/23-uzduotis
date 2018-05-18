@@ -4,8 +4,8 @@
 // Prisijungimo duomenys
 $servername = 'localhost';
 $dbname = 'Auto';
-$username = 'root';
-$password = 'mysql';
+$username = 'Auto';
+$password = 'LabaiSlaptas123';
 
 
 header('Content-Type: application/json');

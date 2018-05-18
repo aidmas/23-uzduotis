@@ -3,8 +3,8 @@
 // Prisijungimo duomenys
 $servername = 'localhost';
 $dbname = 'Auto';
-$username = 'root';
-$password = 'mysql';
+$username = 'Auto';
+$password = 'LabaiSlaptas123';
 
 // Prisijungiame prie duomenų bazės 
 $conn = new mysqli($servername, $username, $password, $dbname);
